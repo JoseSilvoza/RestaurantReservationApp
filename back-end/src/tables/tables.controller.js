@@ -121,7 +121,6 @@ async function list(req, res, next) {
 }
 
 async function update(req, res, next) {
-  console.log(req.body)
   const data = await service.update(
     req.params.table_id,
     req.body.data.reservation_id

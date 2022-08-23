@@ -19,8 +19,6 @@
    .put(controller.statusChange)
    .all(methodNotAllowed);
  
- // router.route("/:reservation_id/edit").put(controller.update);
- 
  router
    .route("/:reservation_id")
    .get(controller.read)

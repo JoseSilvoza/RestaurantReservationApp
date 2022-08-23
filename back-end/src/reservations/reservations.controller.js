@@ -62,9 +62,7 @@ async function reservationExists(req, res, next) {
 }
 
 function dataCheck(req, res, next) {
-  console.log(req.body.data)
   if (!req.body.data) {
-    console.log("hello")
     return next({
       status: 400,
       message: "must include data property",
@@ -127,7 +125,6 @@ function dataCheck(req, res, next) {
   }
 
   if (typeof people !== "number") {
-    console.log("hello one")
     return next({
       status: 400,
       message: "people must be a number",
@@ -222,7 +219,6 @@ async function statusChange(req, res, next) {
 }
 
 async function update(req, res, next) {
-  console.log(req.body.data)
   const data = await service.update(req.params.reservation_id, req.body.data);
   res.json({ data });
 }
