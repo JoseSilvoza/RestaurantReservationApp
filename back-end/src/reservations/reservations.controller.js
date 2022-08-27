@@ -103,6 +103,16 @@ function dataCheck(req, res, next) {
     });
   }
 
+  if (mobile_number) {
+    validNumber = mobile_number.replace(/-/g, "");
+    if (!Number(validNumber)) {
+      return next({
+        status: 400,
+        message: "mobile_number must be valid numbers",
+      });
+    }
+  }
+
   if (!reservation_date || reservation_date.length === 0) {
     return next({
       status: 400,
@@ -117,7 +127,7 @@ function dataCheck(req, res, next) {
     });
   }
 
-  if (!people || people === 0) {
+  if (!people || people <= 0) {
     return next({
       status: 400,
       message: "people must be included and greater than 0",
@@ -235,6 +245,7 @@ module.exports = {
   update: [
     asyncErrorBoundary(reservationExists),
     dataCheck,
+    validate,
     asyncErrorBoundary(update),
   ],
 };

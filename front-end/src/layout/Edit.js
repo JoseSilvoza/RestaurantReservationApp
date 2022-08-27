@@ -1,4 +1,4 @@
-import { ReservationForm } from "./NewReservation";
+import  ReservationForm  from "./ReservationForm";
 import React, { useState, useEffect } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { readReservation, updateReservation } from "../utils/api";
@@ -58,12 +58,17 @@ export default function Edit() {
     setReservationsError(null);
     data.people = Number(data.people)
     try {
-      await updateReservation(params.reservation_id, data);
+      const res = await updateReservation(params.reservation_id, data);
+      const body = await res.json();
+      console.log(body);
+      if (res.status >= 299 || res.status < 200) {
+        throw body.error;
+      } else {
+        history.push(`/dashboard?date=${data.reservation_date}`);
+      }
     } catch (err) {
-      setReservationsError(err);
+      setReservationsError({message: err});
     }
-
-    history.push(`/dashboard?date=${data.reservation_date}`);
   }
 
   return (
